@@ -650,7 +650,7 @@ var icons = {
     ExternalLink: ExternalLink,
 };
 
-var StyledButton$1 = styled.button(templateObject_1$4 || (templateObject_1$4 = __makeTemplateObject(["\n  display: flex;\n  align-items: center;\n  background-color: #E7E7E8;\n  border-width: 0;\n  border-radius: 8px;\n  cursor: pointer;\n  padding: 8px 16px;\n  gap: 10px;\n  font-weight: 600;\n  font-size: 14px;\n  line-height: 20px;\n  box-sizing: border-box;\n  color: #0C0E14;\n  font-family: 'Inter', sans-serif;\n\n  &:hover {\n    background-color: ", ";\n  }\n"], ["\n  display: flex;\n  align-items: center;\n  background-color: #E7E7E8;\n  border-width: 0;\n  border-radius: 8px;\n  cursor: pointer;\n  padding: 8px 16px;\n  gap: 10px;\n  font-weight: 600;\n  font-size: 14px;\n  line-height: 20px;\n  box-sizing: border-box;\n  color: #0C0E14;\n  font-family: 'Inter', sans-serif;\n\n  &:hover {\n    background-color: ", ";\n  }\n"])), function (props) {
+var StyledButton$1 = styled.button(templateObject_1$5 || (templateObject_1$5 = __makeTemplateObject(["\n  display: flex;\n  align-items: center;\n  background-color: #E7E7E8;\n  border-width: 0;\n  border-radius: 8px;\n  cursor: pointer;\n  padding: 8px 16px;\n  gap: 10px;\n  font-weight: 600;\n  font-size: 14px;\n  line-height: 20px;\n  box-sizing: border-box;\n  color: #0C0E14;\n  font-family: 'Inter', sans-serif;\n\n  &:hover {\n    background-color: ", ";\n  }\n"], ["\n  display: flex;\n  align-items: center;\n  background-color: #E7E7E8;\n  border-width: 0;\n  border-radius: 8px;\n  cursor: pointer;\n  padding: 8px 16px;\n  gap: 10px;\n  font-weight: 600;\n  font-size: 14px;\n  line-height: 20px;\n  box-sizing: border-box;\n  color: #0C0E14;\n  font-family: 'Inter', sans-serif;\n\n  &:hover {\n    background-color: ", ";\n  }\n"])), function (props) {
     return props.isInverted ? "#111" : "#FFF";
 });
 var Button = function (_a) {
@@ -670,10 +670,10 @@ var Button = function (_a) {
                 height: 32,
             } }))));
 };
-var templateObject_1$4;
+var templateObject_1$5;
 
-var StyledModalWrapper = styled.div(templateObject_1$3 || (templateObject_1$3 = __makeTemplateObject(["\n  position: fixed;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  z-index: 9999;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  background-color: rgba(0, 0, 0, 0.5);\n  transition: opacity 0.25s ease-out;\n"], ["\n  position: fixed;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  z-index: 9999;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  background-color: rgba(0, 0, 0, 0.5);\n  transition: opacity 0.25s ease-out;\n"])));
-var StyledModal = styled.div(templateObject_2$1 || (templateObject_2$1 = __makeTemplateObject(["\n  width: 318px;\n  box-sizing: border-box;\n  padding: 24px;\n  background: #12141B;\n  border: 1px solid #1F2129;\n  backdrop-filter: blur(19.5px);\n  border-radius: 12px;\n"], ["\n  width: 318px;\n  box-sizing: border-box;\n  padding: 24px;\n  background: #12141B;\n  border: 1px solid #1F2129;\n  backdrop-filter: blur(19.5px);\n  border-radius: 12px;\n"])));
+var StyledModalWrapper = styled.div(templateObject_1$4 || (templateObject_1$4 = __makeTemplateObject(["\n  position: fixed;\n  z-index: 9999;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  background-color: rgba(0, 0, 0, 0.5);\n  transition: opacity 0.25s ease-out;\n"], ["\n  position: fixed;\n  z-index: 9999;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  background-color: rgba(0, 0, 0, 0.5);\n  transition: opacity 0.25s ease-out;\n"])));
+var StyledModal = styled.div(templateObject_2$1 || (templateObject_2$1 = __makeTemplateObject(["\n  width: 318px;\n  box-sizing: border-box;\n  padding: 24px;\n  background: #12141B;\n  border: 1px solid #1F2129;\n  backdrop-filter: blur(19.5px);\n  border-radius: 12px;\n  position: absolute;\n  top: 90px;\n  right: 70px;\n"], ["\n  width: 318px;\n  box-sizing: border-box;\n  padding: 24px;\n  background: #12141B;\n  border: 1px solid #1F2129;\n  backdrop-filter: blur(19.5px);\n  border-radius: 12px;\n  position: absolute;\n  top: 90px;\n  right: 70px;\n"])));
 var StyledHeader = styled.div(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  padding-bottom: 24px;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n"], ["\n  padding-bottom: 24px;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n"])));
 var StyledTitle = styled(Typography)(templateObject_4 || (templateObject_4 = __makeTemplateObject(["\n  font-family: 'Lexend', sans-serif;\n  font-size: 24px;\n  font-weight: 400;\n  line-height: 28px;\n  color: #E7E7E8;\n"], ["\n  font-family: 'Lexend', sans-serif;\n  font-size: 24px;\n  font-weight: 400;\n  line-height: 28px;\n  color: #E7E7E8;\n"])));
 var StyledBody = styled.div(templateObject_5 || (templateObject_5 = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n  align-items: strech;\n"], ["\n  display: flex;\n  flex-direction: column;\n  align-items: strech;\n"])));
@@ -685,17 +685,18 @@ var Modal = function (_a) {
     return (React.createElement(StyledModalWrapper, __assign({ onClick: onClose }, rest),
         React.createElement(StyledModal, { onClick: function (e) { return e.stopPropagation(); } },
             React.createElement(StyledHeader, { style: headerStyle },
-                React.createElement(StyledTitle, null, title),
-                React.createElement("div", { style: { cursor: "pointer" }, onClick: onClose },
-                    React.createElement(icons.Close, { stroke: "#E7E7E8" }))),
+                React.createElement(StyledTitle, null, title)),
             React.createElement(StyledBody, null, children))));
 };
-var templateObject_1$3, templateObject_2$1, templateObject_3, templateObject_4, templateObject_5;
+var templateObject_1$4, templateObject_2$1, templateObject_3, templateObject_4, templateObject_5;
 
-var StyledButton = styled(Button)(templateObject_1$2 || (templateObject_1$2 = __makeTemplateObject(["\n  height: 64px;\n  border-radius: 8px;\n  background: transparent;\n  color: #626676;\n  font-family: 'Lexend', sans-serif;\n  font-weight: 400;\n  font-size: 16px;\n  line-height: 130%;\n  letter-spacing: -0.02em;\n\n  &:hover {\n    background: #191B23;\n    color: #E7E7E8;\n  }\n"], ["\n  height: 64px;\n  border-radius: 8px;\n  background: transparent;\n  color: #626676;\n  font-family: 'Lexend', sans-serif;\n  font-weight: 400;\n  font-size: 16px;\n  line-height: 130%;\n  letter-spacing: -0.02em;\n\n  &:hover {\n    background: #191B23;\n    color: #E7E7E8;\n  }\n"])));
+var StyledButton = styled(Button)(templateObject_1$3 || (templateObject_1$3 = __makeTemplateObject(["\n  height: 64px;\n  border-radius: 8px;\n  background: transparent;\n  color: #626676;\n  font-family: 'Lexend', sans-serif;\n  font-weight: 400;\n  font-size: 16px;\n  line-height: 130%;\n  letter-spacing: -0.02em;\n\n  &:hover {\n    background: ", ";\n    color: #E7E7E8;\n  }\n"], ["\n  height: 64px;\n  border-radius: 8px;\n  background: transparent;\n  color: #626676;\n  font-family: 'Lexend', sans-serif;\n  font-weight: 400;\n  font-size: 16px;\n  line-height: 130%;\n  letter-spacing: -0.02em;\n\n  &:hover {\n    background: ", ";\n    color: #E7E7E8;\n  }\n"])), function (_a) {
+    var activeWalletBgColor = _a.activeWalletBgColor;
+    return activeWalletBgColor;
+});
 var StyledNotInstalledWallet = styled.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  display: flex;\n  align-items: flex-start;\n  gap: 4px;\n  opacity: 0.5;\n  font-size: 14px;\n"], ["\n  display: flex;\n  align-items: flex-start;\n  gap: 4px;\n  opacity: 0.5;\n  font-size: 14px;\n"])));
-var ConnectWalletModal = function (_a) {
-    var _b = _a.style, style = _b === void 0 ? {} : _b, _c = _a.headerStyle, headerStyle = _c === void 0 ? {} : _c, _d = _a.isInverted, isInverted = _d === void 0 ? false : _d, _e = _a.backgroundOpacity, backgroundOpacity = _e === void 0 ? 0.5 : _e, isOpen = _a.isOpen, onClose = _a.onClose;
+var ConnectWalletWrapper = function (_a) {
+    var activeWalletBgColor = _a.activeWalletBgColor, onClose = _a.onClose;
     var connect = useConnectWallet().connect;
     var supportedWallets = getSupportedWallets();
     var isAWalletInstalled = supportedWallets.find(function (_a) {
@@ -709,11 +710,11 @@ var ConnectWalletModal = function (_a) {
         else {
             window.open(wallet.websiteUrl, "_blank", "noreferrer");
         }
-        onClose(event);
+        onClose && onClose(event);
     }; };
-    return (React.createElement(Modal, { isOpen: isOpen, style: style, headerStyle: headerStyle, title: isAWalletInstalled ? "Connect your wallet" : "Install a wallet", onClose: onClose, isInverted: isInverted, backgroundOpacity: backgroundOpacity }, supportedWallets.length === 0 ? (React.createElement(Typography, { isInverted: true, style: { textAlign: "center" } }, "Cardano wallet extensions are currently only supported in Chrome and Brave browsers.")) : (supportedWallets.map(function (wallet) {
+    return (React.createElement(React.Fragment, null, supportedWallets.length === 0 ? (React.createElement(Typography, { isInverted: true, style: { textAlign: "center" } }, "Cardano wallet extensions are currently only supported in Chrome and Brave browsers.")) : (supportedWallets.map(function (wallet) {
         return (React.createElement("div", { key: wallet.id },
-            React.createElement(StyledButton, { iconLeft: wallet.icon, onClick: function (event) { return handleSelectWallet(event)(wallet); }, isFullWidth: true },
+            React.createElement(StyledButton, { iconLeft: wallet.icon, onClick: function (event) { return handleSelectWallet(event)(wallet); }, isFullWidth: true, activeWalletBgColor: activeWalletBgColor },
                 React.createElement("div", { style: {
                         display: "flex",
                         justifyContent: "space-between",
@@ -725,28 +726,48 @@ var ConnectWalletModal = function (_a) {
                         React.createElement(icons.ExternalLink, { width: 18, height: 18, stroke: "#626676" })))))));
     }))));
 };
-var templateObject_1$2, templateObject_2;
+var templateObject_1$3, templateObject_2;
 
-var StyledWalletDiv = styled.div(templateObject_1$1 || (templateObject_1$1 = __makeTemplateObject(["\n  display: flex;\n  align-items: center;\n  color: #E7E7E8;\n  font-family: 'Lexend', sans-serif;\n  font-weight: 400;\n  font-size: 16px;\n  line-height: 130%;\n  letter-spacing: -0.02em;\n"], ["\n  display: flex;\n  align-items: center;\n  color: #E7E7E8;\n  font-family: 'Lexend', sans-serif;\n  font-weight: 400;\n  font-size: 16px;\n  line-height: 130%;\n  letter-spacing: -0.02em;\n"])));
-var DisconnectWalletModal = function (_a) {
-    var isOpen = _a.isOpen, _b = _a.style, style = _b === void 0 ? {} : _b, _c = _a.headerStyle, headerStyle = _c === void 0 ? {} : _c, _d = _a.disconnectButtonStyle, disconnectButtonStyle = _d === void 0 ? {} : _d, _e = _a.isInverted, isInverted = _e === void 0 ? false : _e, _f = _a.backgroundOpacity, backgroundOpacity = _f === void 0 ? 0.5 : _f, onClose = _a.onClose;
-    var _g = useConnectWallet(), wallet = _g.wallet, disconnect = _g.disconnect;
+var ConnectWalletModal = function (_a) {
+    var _b = _a.style, style = _b === void 0 ? {} : _b, _c = _a.headerStyle, headerStyle = _c === void 0 ? {} : _c, _d = _a.isInverted, isInverted = _d === void 0 ? false : _d, _e = _a.backgroundOpacity, backgroundOpacity = _e === void 0 ? 0.5 : _e, isOpen = _a.isOpen, onClose = _a.onClose;
+    var supportedWallets = getSupportedWallets();
+    var isAWalletInstalled = supportedWallets.find(function (_a) {
+        var isInstalled = _a.isInstalled;
+        return isInstalled;
+    });
+    return (React.createElement(Modal, { isOpen: isOpen, style: style, headerStyle: headerStyle, title: isAWalletInstalled ? "Connect your wallet" : "Install a wallet", onClose: onClose, isInverted: isInverted, backgroundOpacity: backgroundOpacity },
+        React.createElement(ConnectWalletWrapper, { activeWalletBgColor: "#191B23", onClose: onClose })));
+};
+
+var StyledWalletDiv = styled.div(templateObject_1$2 || (templateObject_1$2 = __makeTemplateObject(["\n  display: flex;\n  align-items: center;\n  color: #E7E7E8;\n  font-family: 'Lexend', sans-serif;\n  font-weight: 400;\n  font-size: 16px;\n  line-height: 130%;\n  letter-spacing: -0.02em;\n"], ["\n  display: flex;\n  align-items: center;\n  color: #E7E7E8;\n  font-family: 'Lexend', sans-serif;\n  font-weight: 400;\n  font-size: 16px;\n  line-height: 130%;\n  letter-spacing: -0.02em;\n"])));
+var DisconnectWalletWrapper = function (_a) {
+    var _b = _a.disconnectButtonStyle, disconnectButtonStyle = _b === void 0 ? {} : _b, onClose = _a.onClose;
+    var _c = useConnectWallet(), wallet = _c.wallet, disconnect = _c.disconnect;
     var handleDisconnect = function (event) {
         disconnect();
-        onClose(event);
+        onClose && onClose(event);
     };
     if (!wallet) {
         return null;
     }
-    return (React.createElement(Modal, { isOpen: isOpen, style: style, headerStyle: headerStyle, title: wallet.name, isInverted: isInverted, backgroundOpacity: backgroundOpacity, onClose: onClose },
-        React.createElement(StyledWalletDiv, null,
-            React.createElement(Typography, null,
-                "Connected with ",
-                wallet.name,
-                "."),
-            React.createElement(Button, { onClick: handleDisconnect, style: __assign({ marginLeft: "0.5rem", justifyContent: "center" }, disconnectButtonStyle) }, "Disconnect"))));
+    return (React.createElement(StyledWalletDiv, null,
+        React.createElement(Typography, null,
+            "Connected with ",
+            wallet.name,
+            "."),
+        React.createElement(Button, { onClick: handleDisconnect, style: __assign({ marginLeft: "0.5rem", justifyContent: "center" }, disconnectButtonStyle) }, "Disconnect")));
 };
-var templateObject_1$1;
+var templateObject_1$2;
+
+var DisconnectWalletModal = function (_a) {
+    var isOpen = _a.isOpen, _b = _a.style, style = _b === void 0 ? {} : _b, _c = _a.headerStyle, headerStyle = _c === void 0 ? {} : _c, _d = _a.isInverted, isInverted = _d === void 0 ? false : _d, _e = _a.backgroundOpacity, backgroundOpacity = _e === void 0 ? 0.5 : _e, onClose = _a.onClose;
+    var wallet = useConnectWallet().wallet;
+    if (!wallet) {
+        return null;
+    }
+    return (React.createElement(Modal, { isOpen: isOpen, style: style, headerStyle: headerStyle, title: wallet.name, isInverted: isInverted, backgroundOpacity: backgroundOpacity, onClose: onClose },
+        React.createElement(DisconnectWalletWrapper, { onClose: onClose })));
+};
 
 var WalletModal = function (_a) {
     var style = _a.style, onConnect = _a.onConnect, onError = _a.onError, fontFamily = _a.fontFamily, rest = __rest(_a, ["style", "onConnect", "onError", "fontFamily"]);
@@ -779,17 +800,17 @@ var DisconnectWalletButton = function (_a) {
     return (React.createElement(Button, { style: style, iconLeft: wallet.icon, onClick: onClick, isSmallIcon: true }, "Connected"));
 };
 
-var StyledWrapper = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: absolute;\n  top: 42px;\n  right: 70px;\n  z-index: 9999;\n"], ["\n  position: absolute;\n  top: 42px;\n  right: 70px;\n  z-index: 9999;\n"])));
+var StyledWrapper$1 = styled.div(templateObject_1$1 || (templateObject_1$1 = __makeTemplateObject(["\n  position: absolute;\n  top: 42px;\n  right: 70px;\n  z-index: 9999;\n"], ["\n  position: absolute;\n  top: 42px;\n  right: 70px;\n  z-index: 9999;\n"])));
 var WalletButton = function (_a) {
     var style = _a.style, rest = __rest(_a, ["style"]);
     var wallet = useConnectWallet().wallet;
     var buttonStyle = __assign({}, style);
-    return React.createElement(StyledWrapper, null, !!wallet ?
+    return React.createElement(StyledWrapper$1, null, !!wallet ?
         React.createElement(DisconnectWalletButton, __assign({ style: buttonStyle }, rest))
         :
             React.createElement(ConnectWalletButton, __assign({ style: buttonStyle }, rest)));
 };
-var templateObject_1;
+var templateObject_1$1;
 
 var ConnectWallet = function (_a) {
     var onClickButton = _a.onClickButton, onCloseModal = _a.onCloseModal, onConnect = _a.onConnect, onError = _a.onError, _b = _a.mainButtonStyle, mainButtonStyle = _b === void 0 ? {} : _b, _c = _a.modalStyle, modalStyle = _c === void 0 ? {} : _c, _d = _a.modalHeaderStyle, modalHeaderStyle = _d === void 0 ? {} : _d, _e = _a.disconnectButtonStyle, disconnectButtonStyle = _e === void 0 ? {} : _e, _f = _a.fontFamily, fontFamily = _f === void 0 ? "" : _f, _g = _a.isInverted, isInverted = _g === void 0 ? false : _g;
@@ -815,4 +836,24 @@ var ConnectWallet = function (_a) {
         React.createElement(WalletButton, { style: mainButtonStyle, onClick: handleButtonClick })));
 };
 
-export { ConnectWallet, WalletButton, WalletModal, disconnectWallet, enableWallet, getSupportedWallets, getWalletAddress, getWalletBalance, getWalletChangeAddress, signWalletTransaction, useConnectWallet };
+var StyledWrapper = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  width: 320px;\n"], ["\n  width: 320px;\n"])));
+var WalletWrapper = function (_a) {
+    var style = _a.style, onConnect = _a.onConnect, onError = _a.onError, fontFamily = _a.fontFamily, _b = _a.activeWalletBgColor, activeWalletBgColor = _b === void 0 ? "#12141B" : _b, rest = __rest(_a, ["style", "onConnect", "onError", "fontFamily", "activeWalletBgColor"]);
+    var _c = useConnectWallet(), wallet = _c.wallet, isConnected = _c.isConnected, error = _c.error;
+    var prevIsConnected = usePrevious(isConnected);
+    var modalStyle = __assign({ fontFamily: fontFamily }, style);
+    useEffect(function () {
+        if (onConnect && wallet && !prevIsConnected && isConnected) {
+            onConnect(wallet);
+        }
+    }, [isConnected, wallet, prevIsConnected]);
+    useEffect(function () {
+        if (onError && error) {
+            onError(error);
+        }
+    }, [error]);
+    return React.createElement(StyledWrapper, null, wallet ? (React.createElement(DisconnectWalletWrapper, __assign({ style: modalStyle }, rest))) : (React.createElement(ConnectWalletWrapper, __assign({ style: modalStyle, activeWalletBgColor: activeWalletBgColor }, rest))));
+};
+var templateObject_1;
+
+export { ConnectWallet, WalletButton, WalletModal, WalletWrapper, disconnectWallet, enableWallet, getSupportedWallets, getWalletAddress, getWalletBalance, getWalletChangeAddress, signWalletTransaction, useConnectWallet };

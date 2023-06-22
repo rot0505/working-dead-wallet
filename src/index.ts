@@ -2,6 +2,7 @@ export { default as useConnectWallet } from "./hooks/useConnectWallet";
 export { default as ConnectWallet } from "./components/ConnectWallet";
 export { default as WalletButton } from "./components/WalletButton";
 export { default as WalletModal } from "./components/WalletModal";
+export { default as WalletWrapper } from "./components/WalletWrapper";
 export * from "./utils";
 
 export * from "./hooks/useConnectWallet/types";

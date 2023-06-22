@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { logos } from "../../assets";
 
-interface Props extends ComponentPropsWithoutRef<"button"> {
+export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
   readonly iconLeft?: string;
   readonly iconRight?: string;
   readonly isFullWidth?: boolean;
@@ -11,7 +11,7 @@ interface Props extends ComponentPropsWithoutRef<"button"> {
   readonly isSmallIcon?: boolean;
 }
 
-const StyledButton = styled.button<Props>`
+const StyledButton = styled.button<ButtonProps>`
   display: flex;
   align-items: center;
   background-color: #E7E7E8;
@@ -32,7 +32,7 @@ const StyledButton = styled.button<Props>`
     props.isInverted ? "#111" : "#FFF"};
   }
 `;
-const Button: FunctionComponent<Props> = ({
+const Button: FunctionComponent<ButtonProps> = ({
   iconLeft,
   iconRight,
   isFullWidth = false,

@@ -1,15 +1,11 @@
 import React, { FunctionComponent } from "react";
 import styled from "styled-components";
 
-import { icons } from "../../assets";
 import { Typography } from "../../elements";
 import { ModalProps } from "./types";
 
 const StyledModalWrapper = styled.div`
   position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   z-index: 9999;
   top: 0;
   right: 0;
@@ -27,6 +23,9 @@ const StyledModal = styled.div`
   border: 1px solid #1F2129;
   backdrop-filter: blur(19.5px);
   border-radius: 12px;
+  position: absolute;
+  top: 90px;
+  right: 70px;
 `;
 
 const StyledHeader = styled.div`
@@ -75,10 +74,6 @@ const Modal: FunctionComponent<ModalProps> = ({
       >
         <StyledHeader style={headerStyle}>
           <StyledTitle>{title}</StyledTitle>
-
-          <div style={{ cursor: "pointer" }} onClick={onClose}>
-            <icons.Close stroke="#E7E7E8" />
-          </div>
         </StyledHeader>
 
         <StyledBody>
