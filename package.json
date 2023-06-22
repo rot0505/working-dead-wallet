@@ -1,0 +1,55 @@
+{
+  "name": "working-dead-wallet",
+  "version": "0.1.0",
+  "description": "Working Dead wallet connector package",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "repository": "https://github.com/rot0505/working-dead-wallet.git",
+  "license": "MIT",
+  "scripts": {
+    "build": "rm -rf ./dist && rollup -c && tsc -d --emitDeclarationOnly --declarationDir dist",
+    "storybook": "start-storybook -p 6006 -s ./src",
+    "build-storybook": "build-storybook -s ./src",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "release": "yarn build && np"
+  },
+  "jest": {
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/setupTests.js"
+    ]
+  },
+  "dependencies": {
+    "@types/styled-components": "^5.1.4",
+    "bech32": "^2.0.0",
+    "buffer": "^6.0.3",
+    "cbor-web": "^9.0.0",
+    "react": "^18.2.0",
+    "react-device-detect": "^2.2.2",
+    "react-dom": "^18.2.0",
+    "styled-components": "^5.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.16",
+    "@babel/preset-env": "^7.12.16",
+    "@rollup/plugin-typescript": "^8.2.0",
+    "@storybook/addon-a11y": "^6.1.18",
+    "@storybook/addon-actions": "^6.1.18",
+    "@storybook/addon-essentials": "^6.1.18",
+    "@storybook/addon-links": "^6.1.18",
+    "@storybook/react": "^6.1.18",
+    "@types/react": "^18.0.25",
+    "@types/react-dom": "^18.2.6",
+    "babel-loader": "^8.1.0",
+    "babel-plugin-styled-components": "^1.11.1",
+    "np": "^7.4.0",
+    "react-is": "^18.2.0",
+    "rollup": "^2.39.0",
+    "tsconfig-paths-webpack-plugin": "4.0.0",
+    "tslib": "^2.0.3",
+    "typescript": "^4.1.5"
+  }
+}
