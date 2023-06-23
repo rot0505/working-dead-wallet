@@ -3,15 +3,19 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var React = require('react');
+var Web3 = require('web3');
 var bech32 = require('bech32');
 var buffer = require('buffer');
 var cborWeb = require('cbor-web');
+var BigNumber = require('bignumber.js');
 var reactDeviceDetect = require('react-device-detect');
 var styled = require('styled-components');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
+var Web3__default = /*#__PURE__*/_interopDefaultLegacy(Web3);
+var BigNumber__default = /*#__PURE__*/_interopDefaultLegacy(BigNumber);
 var styled__default = /*#__PURE__*/_interopDefaultLegacy(styled);
 
 /******************************************************************************
@@ -109,10 +113,16 @@ var storageKey = "workingDeadWalletkey";
 
 var SupportedWallet;
 (function (SupportedWallet) {
+    SupportedWallet["metamask"] = "metamask";
     SupportedWallet["eternl"] = "eternl";
     SupportedWallet["flint"] = "flint";
     SupportedWallet["nami"] = "nami";
 })(SupportedWallet || (SupportedWallet = {}));
+var SupportedChain;
+(function (SupportedChain) {
+    SupportedChain["ethereum"] = "ethereum";
+    SupportedChain["cardano"] = "cardano";
+})(SupportedChain || (SupportedChain = {}));
 var NetworkMode;
 (function (NetworkMode) {
     NetworkMode[NetworkMode["mainNet"] = 1] = "mainNet";
@@ -155,27 +165,49 @@ var asyncTimeout = function (fn, errorMessage, ms) {
 };
 
 var enableWallet = function (name) { return __awaiter(void 0, void 0, void 0, function () {
-    var walletName, selectedWallet, enabledWalletAPI, enabledWallet;
-    var _a;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
+    var walletName, enabledWallet, ethereum, selectedWallet, enabledWalletAPI;
+    var _a, _b;
+    return __generator(this, function (_c) {
+        switch (_c.label) {
             case 0:
-                if (!window.cardano) {
+                if (!(window.cardano || window.ethereum)) {
                     throw new Error("No wallet extensions have been installed. Please install a wallet\n      extension and refresh the page.");
                 }
                 walletName = name || (localStorage === null || localStorage === void 0 ? void 0 : localStorage.getItem(storageKey));
                 if (!walletName) {
                     throw new Error("Wallet name must be passed as an argument or have been connected previously.");
                 }
-                selectedWallet = window.cardano[walletName];
+                if (!(walletName === SupportedWallet.metamask)) return [3 /*break*/, 5];
+                ethereum = window.ethereum;
+                _c.label = 1;
+            case 1:
+                _c.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, ethereum.request({ method: "eth_requestAccounts" })];
+            case 2:
+                _c.sent();
+                enabledWallet = {
+                    name: "Metamask",
+                    icon: "Metamask",
+                    isEVM: true,
+                };
+                return [3 /*break*/, 4];
+            case 3:
+                _c.sent();
+                enabledWallet = null;
+                return [3 /*break*/, 4];
+            case 4: return [3 /*break*/, 7];
+            case 5:
+                selectedWallet = (_a = window.cardano) === null || _a === void 0 ? void 0 : _a[walletName];
                 if (!selectedWallet) {
                     throw new Error("Wallet not found. Please ensure the wallet extension has been\n        installed. If it was recently installed, you may need to refresh \n        the page and try again.");
                 }
                 return [4 /*yield*/, asyncTimeout(selectedWallet.enable, "Enabling wallet timed out after 10 seconds", 10000)];
-            case 1:
-                enabledWalletAPI = _b.sent();
+            case 6:
+                enabledWalletAPI = _c.sent();
                 enabledWallet = __assign(__assign({}, selectedWallet), enabledWalletAPI);
-                (_a = window.localStorage) === null || _a === void 0 ? void 0 : _a.setItem(storageKey, walletName);
+                _c.label = 7;
+            case 7:
+                (_b = window.localStorage) === null || _b === void 0 ? void 0 : _b.setItem(storageKey, walletName);
                 return [2 /*return*/, enabledWallet];
         }
     });
@@ -201,21 +233,30 @@ var fromHex = function (hex) {
 };
 
 var getWalletAddress = function (wallet) { return __awaiter(void 0, void 0, void 0, function () {
-    var addresses, address;
+    var addresses, provider, web3, address;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 if (!wallet) {
                     throw new Error("No wallet selected");
                 }
-                return [4 /*yield*/, wallet.getUsedAddresses()];
+                if (!wallet.isEVM) return [3 /*break*/, 2];
+                provider = window.web3.currentProvider;
+                web3 = new Web3__default["default"](provider);
+                return [4 /*yield*/, web3.eth.getAccounts()];
             case 1:
                 addresses = _a.sent();
+                return [3 /*break*/, 4];
+            case 2: return [4 /*yield*/, wallet.getUsedAddresses()];
+            case 3:
+                addresses = _a.sent();
+                _a.label = 4;
+            case 4:
                 address = addresses[0];
                 if (!address) {
                     throw new Error("Unable to fetch wallet address");
                 }
-                return [2 /*return*/, addressFromHex(address)];
+                return [2 /*return*/, wallet.isEVM ? address : addressFromHex(address)];
         }
     });
 }); };
@@ -241,15 +282,26 @@ var getWalletChangeAddress = function (wallet) { return __awaiter(void 0, void 0
 }); };
 
 var getWalletBalance = function (wallet) { return __awaiter(void 0, void 0, void 0, function () {
-    var balanceHex, decoded, lovelaces;
+    var provider, web3, address, balanceOf, balance, balanceHex, decoded, lovelaces;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 if (!wallet) {
                     throw new Error("No wallet selected");
                 }
-                return [4 /*yield*/, wallet.getBalance()];
+                if (!wallet.isEVM) return [3 /*break*/, 3];
+                provider = window.web3.currentProvider;
+                web3 = new Web3__default["default"](provider);
+                return [4 /*yield*/, getWalletAddress(wallet)];
             case 1:
+                address = _a.sent();
+                return [4 /*yield*/, web3.eth.getBalance(address)];
+            case 2:
+                balanceOf = _a.sent();
+                balance = BigNumber__default["default"](balanceOf).div(Math.pow(10, 18));
+                return [2 /*return*/, Number(balance.toString())];
+            case 3: return [4 /*yield*/, wallet.getBalance()];
+            case 4:
                 balanceHex = _a.sent();
                 decoded = cborWeb.decode(balanceHex);
                 lovelaces = Array.isArray(decoded) ? decoded[0] : decoded;
@@ -260,11 +312,20 @@ var getWalletBalance = function (wallet) { return __awaiter(void 0, void 0, void
 
 var supportedWallets = [
     {
+        id: SupportedWallet.metamask,
+        name: "Metamask",
+        icon: "Metamask",
+        extensionUrl: "https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn",
+        websiteUrl: "https://metamask.io/",
+        chain: SupportedChain.ethereum
+    },
+    {
         id: SupportedWallet.nami,
         name: "Nami",
         icon: "Nami",
         extensionUrl: "https://chrome.google.com/webstore/detail/nami/lpfcbjknijpeeillifnkikgncikgfhdo",
         websiteUrl: "https://namiwallet.io/",
+        chain: SupportedChain.cardano
     },
     {
         id: SupportedWallet.eternl,
@@ -272,6 +333,7 @@ var supportedWallets = [
         icon: "Eternl",
         extensionUrl: "https://chrome.google.com/webstore/detail/eternl/kmhcihpebfmpgmihbkipmjlmmioameka",
         websiteUrl: "https://eternl.io/",
+        chain: SupportedChain.cardano
     },
     {
         id: SupportedWallet.flint,
@@ -279,6 +341,7 @@ var supportedWallets = [
         icon: "Flint",
         extensionUrl: "https://chrome.google.com/webstore/detail/flint-wallet/hnhobjmcibchnmglfbldbfabcgaknlkj",
         websiteUrl: "https://flint-wallet.com/",
+        chain: SupportedChain.cardano
     }
 ];
 var getSupportedWallets = function () {
@@ -288,11 +351,21 @@ var getSupportedWallets = function () {
     var installedWallets = [];
     var uninstalledWallets = [];
     supportedWallets.forEach(function (wallet) {
-        if (window.cardano && window.cardano[wallet.id]) {
-            installedWallets.push(__assign(__assign(__assign({}, wallet), window.cardano[wallet.id]), { isInstalled: true }));
+        if (wallet.chain === SupportedChain.ethereum) {
+            if (window.ethereum) {
+                installedWallets.push(__assign(__assign({}, wallet), { isInstalled: true }));
+            }
+            else {
+                uninstalledWallets.push(__assign(__assign({}, wallet), { isInstalled: false }));
+            }
         }
-        else {
-            uninstalledWallets.push(__assign(__assign({}, wallet), { isInstalled: false }));
+        else if (wallet.chain === SupportedChain.cardano) {
+            if (window.cardano && window.cardano[wallet.id]) {
+                installedWallets.push(__assign(__assign(__assign({}, wallet), window.cardano[wallet.id]), { isInstalled: true }));
+            }
+            else {
+                uninstalledWallets.push(__assign(__assign({}, wallet), { isInstalled: false }));
+            }
         }
     });
     return __spreadArray(__spreadArray([], installedWallets, true), uninstalledWallets, true);
@@ -634,6 +707,43 @@ var Nami = function (_a) {
                 React__default["default"].createElement("path", { id: 'path22', d: 'M134.58,390.81A38.25,38.25,0,1,0,157.92,426a38.24,38.24,0,0,0-23.34-35.22Zm-15,59.13A23.91,23.91,0,1,1,143.54,426a23.9,23.9,0,0,1-23.94,23.91Z', fill: "#349ea3" })))));
 };
 
+var Metamask = function (_a) {
+    var _b = _a.width, width = _b === void 0 ? 24 : _b, _c = _a.height, height = _c === void 0 ? 24 : _c;
+    return (React__default["default"].createElement("svg", { xmlns: "http://www.w3.org/2000/svg", width: width, height: height, viewBox: "0 0 212 189", id: "metamask" },
+        React__default["default"].createElement("g", { fill: "none", fillRule: "evenodd" },
+            React__default["default"].createElement("polygon", { fill: "#CDBDB2", points: "60.75 173.25 88.313 180.563 88.313 171 90.563 168.75 106.313 168.75 106.313 180 106.313 187.875 89.438 187.875 68.625 178.875" }),
+            React__default["default"].createElement("polygon", { fill: "#CDBDB2", points: "105.75 173.25 132.75 180.563 132.75 171 135 168.75 150.75 168.75 150.75 180 150.75 187.875 133.875 187.875 113.063 178.875", transform: "matrix(-1 0 0 1 256.5 0)" }),
+            React__default["default"].createElement("polygon", { fill: "#393939", points: "90.563 152.438 88.313 171 91.125 168.75 120.375 168.75 123.75 171 121.5 152.438 117 149.625 94.5 150.188" }),
+            React__default["default"].createElement("polygon", { fill: "#F89C35", points: "75.375 27 88.875 58.5 95.063 150.188 117 150.188 123.75 58.5 136.125 27" }),
+            React__default["default"].createElement("polygon", { fill: "#F89D35", points: "16.313 96.188 .563 141.75 39.938 139.5 65.25 139.5 65.25 119.813 64.125 79.313 58.5 83.813" }),
+            React__default["default"].createElement("polygon", { fill: "#D87C30", points: "46.125 101.25 92.25 102.375 87.188 126 65.25 120.375" }),
+            React__default["default"].createElement("polygon", { fill: "#EA8D3A", points: "46.125 101.813 65.25 119.813 65.25 137.813" }),
+            React__default["default"].createElement("polygon", { fill: "#F89D35", points: "65.25 120.375 87.75 126 95.063 150.188 90 153 65.25 138.375" }),
+            React__default["default"].createElement("polygon", { fill: "#EB8F35", points: "65.25 138.375 60.75 173.25 90.563 152.438" }),
+            React__default["default"].createElement("polygon", { fill: "#EA8E3A", points: "92.25 102.375 95.063 150.188 86.625 125.719" }),
+            React__default["default"].createElement("polygon", { fill: "#D87C30", points: "39.375 138.938 65.25 138.375 60.75 173.25" }),
+            React__default["default"].createElement("polygon", { fill: "#EB8F35", points: "12.938 188.438 60.75 173.25 39.375 138.938 .563 141.75" }),
+            React__default["default"].createElement("polygon", { fill: "#E8821E", points: "88.875 58.5 64.688 78.75 46.125 101.25 92.25 102.938" }),
+            React__default["default"].createElement("polygon", { fill: "#DFCEC3", points: "60.75 173.25 90.563 152.438 88.313 170.438 88.313 180.563 68.063 176.625" }),
+            React__default["default"].createElement("polygon", { fill: "#DFCEC3", points: "121.5 173.25 150.75 152.438 148.5 170.438 148.5 180.563 128.25 176.625", transform: "matrix(-1 0 0 1 272.25 0)" }),
+            React__default["default"].createElement("polygon", { fill: "#393939", points: "70.313 112.5 64.125 125.438 86.063 119.813", transform: "matrix(-1 0 0 1 150.188 0)" }),
+            React__default["default"].createElement("polygon", { fill: "#E88F35", points: "12.375 .563 88.875 58.5 75.938 27" }),
+            React__default["default"].createElement("path", { fill: "#8E5A30", d: "M12.3750002,0.562500008 L2.25000003,31.5000005 L7.87500012,65.250001 L3.93750006,67.500001 L9.56250014,72.5625 L5.06250008,76.5000011 L11.25,82.1250012 L7.31250011,85.5000013 L16.3125002,96.7500014 L58.5000009,83.8125012 C79.1250012,67.3125004 89.2500013,58.8750003 88.8750013,58.5000009 C88.5000013,58.1250009 63.0000009,38.8125006 12.3750002,0.562500008 Z" }),
+            React__default["default"].createElement("g", { transform: "matrix(-1 0 0 1 211.5 0)" },
+                React__default["default"].createElement("polygon", { fill: "#F89D35", points: "16.313 96.188 .563 141.75 39.938 139.5 65.25 139.5 65.25 119.813 64.125 79.313 58.5 83.813" }),
+                React__default["default"].createElement("polygon", { fill: "#D87C30", points: "46.125 101.25 92.25 102.375 87.188 126 65.25 120.375" }),
+                React__default["default"].createElement("polygon", { fill: "#EA8D3A", points: "46.125 101.813 65.25 119.813 65.25 137.813" }),
+                React__default["default"].createElement("polygon", { fill: "#F89D35", points: "65.25 120.375 87.75 126 95.063 150.188 90 153 65.25 138.375" }),
+                React__default["default"].createElement("polygon", { fill: "#EB8F35", points: "65.25 138.375 60.75 173.25 90 153" }),
+                React__default["default"].createElement("polygon", { fill: "#EA8E3A", points: "92.25 102.375 95.063 150.188 86.625 125.719" }),
+                React__default["default"].createElement("polygon", { fill: "#D87C30", points: "39.375 138.938 65.25 138.375 60.75 173.25" }),
+                React__default["default"].createElement("polygon", { fill: "#EB8F35", points: "12.938 188.438 60.75 173.25 39.375 138.938 .563 141.75" }),
+                React__default["default"].createElement("polygon", { fill: "#E8821E", points: "88.875 58.5 64.688 78.75 46.125 101.25 92.25 102.938" }),
+                React__default["default"].createElement("polygon", { fill: "#393939", points: "70.313 112.5 64.125 125.438 86.063 119.813", transform: "matrix(-1 0 0 1 150.188 0)" }),
+                React__default["default"].createElement("polygon", { fill: "#E88F35", points: "12.375 .563 88.875 58.5 75.938 27" }),
+                React__default["default"].createElement("path", { fill: "#8E5A30", d: "M12.3750002,0.562500008 L2.25000003,31.5000005 L7.87500012,65.250001 L3.93750006,67.500001 L9.56250014,72.5625 L5.06250008,76.5000011 L11.25,82.1250012 L7.31250011,85.5000013 L16.3125002,96.7500014 L58.5000009,83.8125012 C79.1250012,67.3125004 89.2500013,58.8750003 88.8750013,58.5000009 C88.5000013,58.1250009 63.0000009,38.8125006 12.3750002,0.562500008 Z" })))));
+};
+
 var ExternalLink = function (_a) {
     var _b = _a.width, width = _b === void 0 ? 24 : _b, _c = _a.height, height = _c === void 0 ? 24 : _c, _d = _a.fill, fill = _d === void 0 ? "none" : _d, _e = _a.stroke, stroke = _e === void 0 ? "currentColor" : _e;
     return (React__default["default"].createElement("svg", { style: { overflow: "visible" }, xmlns: "http://www.w3.org/2000/svg", width: width, height: height, fill: fill, stroke: stroke, strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2", className: "feather feather-external-link", viewBox: "0 0 24 24" },
@@ -650,6 +760,7 @@ var Close = function (_a) {
 };
 
 var logos = {
+    Metamask: Metamask,
     Eternl: Flint,
     Flint: Flint,
     Nami: Nami
@@ -717,7 +828,7 @@ var ConnectWalletWrapper = function (_a) {
             connect(wallet.id);
         }
         else {
-            window.open(wallet.websiteUrl, "_blank", "noreferrer");
+            window.open(wallet.extensionUrl, "_blank", "noreferrer");
         }
         onClose && onClose(event);
     }; };

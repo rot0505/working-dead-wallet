@@ -6,7 +6,7 @@ import { ButtonProps } from "../../elements/Button";
 import { useConnectWallet } from "../../hooks";
 import { getSupportedWallets } from "../../utils";
 import { icons } from "../../assets";
-import { WalletInfo } from "../../common";
+import { SupportedChain, WalletInfo } from "../../common";
 import { WalletWrapperProps } from "./types";
 
 interface StyledButtonProps extends ButtonProps {
@@ -54,7 +54,7 @@ const ConnectWalletWrapper: FunctionComponent<WalletWrapperProps> = ({
     if (wallet.isInstalled) {
       connect(wallet.id);
     } else {
-      window.open(wallet.websiteUrl, "_blank", "noreferrer");
+      window.open(wallet.extensionUrl, "_blank", "noreferrer");
     }
     onClose && onClose(event);
   };

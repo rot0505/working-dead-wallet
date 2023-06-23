@@ -1,6 +1,6 @@
 {
   "name": "working-dead-wallet",
-  "version": "0.1.1",
+  "version": "0.2.1",
   "description": "Working Dead wallet connector package",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
@@ -25,12 +25,14 @@
   "dependencies": {
     "@types/styled-components": "^5.1.4",
     "bech32": "^2.0.0",
+    "bignumber.js": "^9.1.1",
     "buffer": "^6.0.3",
     "cbor-web": "^9.0.0",
     "react": "^18.2.0",
     "react-device-detect": "^2.2.2",
     "react-dom": "^18.2.0",
-    "styled-components": "^5.2.0"
+    "styled-components": "^5.2.0",
+    "web3": "1.6.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",

@@ -1,7 +1,13 @@
 export enum SupportedWallet {
+  metamask = "metamask",
   eternl = "eternl",
   flint = "flint",
   nami = "nami"
+}
+
+export enum SupportedChain {
+  ethereum = "ethereum",
+  cardano = "cardano"
 }
 
 export interface WalletInfo {
@@ -11,6 +17,7 @@ export interface WalletInfo {
   readonly extensionUrl: string;
   readonly websiteUrl: string;
   readonly isInstalled?: boolean;
+  readonly chain: SupportedChain;
 }
 
 export interface UnenabledWallet {
@@ -53,7 +60,13 @@ export interface EnabledWalletApi {
   readonly submitTx: (tx: string) => Promise<any>;
 }
 
-type FullWalletAPI = UnenabledWallet & EnabledWalletApi;
+interface Metamask {
+  icon: string,
+  name: string,
+  isEVM: boolean
+}
+
+type FullWalletAPI = UnenabledWallet & EnabledWalletApi & Metamask;
 export interface EnabledWallet extends FullWalletAPI {
   readonly id: string;
 }
