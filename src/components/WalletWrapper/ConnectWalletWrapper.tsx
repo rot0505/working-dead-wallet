@@ -6,7 +6,7 @@ import { ButtonProps } from "../../elements/Button";
 import { useConnectWallet } from "../../hooks";
 import { getSupportedWallets } from "../../utils";
 import { icons } from "../../assets";
-import { SupportedChain, WalletInfo } from "../../common";
+import { WalletInfo } from "../../common";
 import { WalletWrapperProps } from "./types";
 
 interface StyledButtonProps extends ButtonProps {
@@ -70,7 +70,7 @@ const ConnectWalletWrapper: FunctionComponent<WalletWrapperProps> = ({
           return (
             <div key={wallet.id}>
               <StyledButton
-                iconLeft={wallet.icon}
+                iconLeft={wallet.name}
                 onClick={(event) => handleSelectWallet(event)(wallet)}
                 isFullWidth
                 activeWalletBgColor={activeWalletBgColor}

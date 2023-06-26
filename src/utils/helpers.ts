@@ -1,7 +1,7 @@
 import { bech32 } from "bech32";
 import { Buffer } from "buffer";
 
-import { NetworkMode } from "../common";
+import { NetworkMode, SupportedWalletName } from "../common";
 
 export const addressFromHex = (hex: string) => {
   const networkId = hex[1] === "0" ? NetworkMode.testNet : NetworkMode.mainNet;
@@ -16,3 +16,9 @@ export const addressFromHex = (hex: string) => {
 export const fromHex = (hex: string): Buffer => {
   return Buffer.from(hex, "hex");
 };
+
+export const formatWalletName = (walletName: string) => {
+  const originName: string = walletName.split(" ")[0].toLowerCase();
+  const formatedName: string = SupportedWalletName[originName as keyof typeof SupportedWalletName];
+  return formatedName;
+}

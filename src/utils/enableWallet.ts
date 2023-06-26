@@ -1,4 +1,5 @@
 import { EnabledWallet, EnabledWalletApi, SupportedWallet, asyncTimeout, storageKey } from "../common";
+import { formatWalletName } from "./helpers";
 
 const enableWallet = async (name?: string): Promise<EnabledWallet> => {
   if (!(window.cardano || (window as any).ethereum)) {
@@ -22,7 +23,6 @@ const enableWallet = async (name?: string): Promise<EnabledWallet> => {
       await ethereum.request({ method: "eth_requestAccounts" })
       enabledWallet = {
         name: "Metamask",
-        icon: "Metamask",
         isEVM: true,
       }
     } catch (e) {
@@ -47,6 +47,7 @@ const enableWallet = async (name?: string): Promise<EnabledWallet> => {
     enabledWallet = {
       ...selectedWallet,
       ...enabledWalletAPI,
+      name: formatWalletName(selectedWallet.name)
     };
   }
 

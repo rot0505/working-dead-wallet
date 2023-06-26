@@ -3,9 +3,9 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var React = require('react');
-var Web3 = require('web3');
 var bech32 = require('bech32');
 var buffer = require('buffer');
+var Web3 = require('web3');
 var cborWeb = require('cbor-web');
 var BigNumber = require('bignumber.js');
 var reactDeviceDetect = require('react-device-detect');
@@ -118,6 +118,12 @@ var SupportedWallet;
     SupportedWallet["flint"] = "flint";
     SupportedWallet["nami"] = "nami";
 })(SupportedWallet || (SupportedWallet = {}));
+var SupportedWalletName = {
+    metamask: "Metamask",
+    eternl: "Eternl",
+    flint: "Flint",
+    nami: "Nami"
+};
 var SupportedChain;
 (function (SupportedChain) {
     SupportedChain["ethereum"] = "ethereum";
@@ -164,6 +170,22 @@ var asyncTimeout = function (fn, errorMessage, ms) {
     });
 };
 
+var addressFromHex = function (hex) {
+    var networkId = hex[1] === "0" ? NetworkMode.testNet : NetworkMode.mainNet;
+    var prefix = networkId === NetworkMode.testNet ? "addr_test" : "addr";
+    var bytes = fromHex(hex);
+    var words = bech32.bech32.toWords(bytes);
+    return bech32.bech32.encode(prefix, words, 1000);
+};
+var fromHex = function (hex) {
+    return buffer.Buffer.from(hex, "hex");
+};
+var formatWalletName = function (walletName) {
+    var originName = walletName.split(" ")[0].toLowerCase();
+    var formatedName = SupportedWalletName[originName];
+    return formatedName;
+};
+
 var enableWallet = function (name) { return __awaiter(void 0, void 0, void 0, function () {
     var walletName, enabledWallet, ethereum, selectedWallet, enabledWalletAPI;
     var _a, _b;
@@ -187,7 +209,6 @@ var enableWallet = function (name) { return __awaiter(void 0, void 0, void 0, fu
                 _c.sent();
                 enabledWallet = {
                     name: "Metamask",
-                    icon: "Metamask",
                     isEVM: true,
                 };
                 return [3 /*break*/, 4];
@@ -204,7 +225,7 @@ var enableWallet = function (name) { return __awaiter(void 0, void 0, void 0, fu
                 return [4 /*yield*/, asyncTimeout(selectedWallet.enable, "Enabling wallet timed out after 10 seconds", 10000)];
             case 6:
                 enabledWalletAPI = _c.sent();
-                enabledWallet = __assign(__assign({}, selectedWallet), enabledWalletAPI);
+                enabledWallet = __assign(__assign(__assign({}, selectedWallet), enabledWalletAPI), { name: formatWalletName(selectedWallet.name) });
                 _c.label = 7;
             case 7:
                 (_b = window.localStorage) === null || _b === void 0 ? void 0 : _b.setItem(storageKey, walletName);
@@ -219,17 +240,6 @@ var disconnectWallet = function () {
     if (!selectedWalletName)
         return;
     (_b = window.localStorage) === null || _b === void 0 ? void 0 : _b.removeItem(storageKey);
-};
-
-var addressFromHex = function (hex) {
-    var networkId = hex[1] === "0" ? NetworkMode.testNet : NetworkMode.mainNet;
-    var prefix = networkId === NetworkMode.testNet ? "addr_test" : "addr";
-    var bytes = fromHex(hex);
-    var words = bech32.bech32.toWords(bytes);
-    return bech32.bech32.encode(prefix, words, 1000);
-};
-var fromHex = function (hex) {
-    return buffer.Buffer.from(hex, "hex");
 };
 
 var getWalletAddress = function (wallet) { return __awaiter(void 0, void 0, void 0, function () {
@@ -361,7 +371,7 @@ var getSupportedWallets = function () {
         }
         else if (wallet.chain === SupportedChain.cardano) {
             if (window.cardano && window.cardano[wallet.id]) {
-                installedWallets.push(__assign(__assign(__assign({}, wallet), window.cardano[wallet.id]), { isInstalled: true }));
+                installedWallets.push(__assign(__assign(__assign({}, wallet), window.cardano[wallet.id]), { isInstalled: true, name: wallet.name }));
             }
             else {
                 uninstalledWallets.push(__assign(__assign({}, wallet), { isInstalled: false }));
@@ -834,7 +844,7 @@ var ConnectWalletWrapper = function (_a) {
     }; };
     return (React__default["default"].createElement(React__default["default"].Fragment, null, supportedWallets.length === 0 ? (React__default["default"].createElement(Typography, { isInverted: true, style: { textAlign: "center" } }, "Cardano wallet extensions are currently only supported in Chrome and Brave browsers.")) : (supportedWallets.map(function (wallet) {
         return (React__default["default"].createElement("div", { key: wallet.id },
-            React__default["default"].createElement(StyledButton, { iconLeft: wallet.icon, onClick: function (event) { return handleSelectWallet(event)(wallet); }, isFullWidth: true, activeWalletBgColor: activeWalletBgColor },
+            React__default["default"].createElement(StyledButton, { iconLeft: wallet.name, onClick: function (event) { return handleSelectWallet(event)(wallet); }, isFullWidth: true, activeWalletBgColor: activeWalletBgColor },
                 React__default["default"].createElement("div", { style: {
                         display: "flex",
                         justifyContent: "space-between",
@@ -917,7 +927,7 @@ var DisconnectWalletButton = function (_a) {
     var wallet = useConnectWallet().wallet;
     if (!wallet)
         return null;
-    return (React__default["default"].createElement(Button, { style: style, iconLeft: wallet.icon, onClick: onClick, isSmallIcon: true }, "Connected"));
+    return (React__default["default"].createElement(Button, { style: style, iconLeft: wallet.name, onClick: onClick, isSmallIcon: true }, "Disconnect"));
 };
 
 var StyledWrapper$1 = styled__default["default"].div(templateObject_1$1 || (templateObject_1$1 = __makeTemplateObject(["\n  position: absolute;\n  top: 42px;\n  right: 70px;\n  z-index: 9999;\n"], ["\n  position: absolute;\n  top: 42px;\n  right: 70px;\n  z-index: 9999;\n"])));
@@ -925,22 +935,29 @@ var WalletButton = function (_a) {
     var style = _a.style, rest = __rest(_a, ["style"]);
     var wallet = useConnectWallet().wallet;
     var buttonStyle = __assign({}, style);
-    return React__default["default"].createElement(StyledWrapper$1, null, !!wallet ?
+    return React__default["default"].createElement(React__default["default"].Fragment, null, !!wallet ?
         React__default["default"].createElement(DisconnectWalletButton, __assign({ style: buttonStyle }, rest))
         :
-            React__default["default"].createElement(ConnectWalletButton, __assign({ style: buttonStyle }, rest)));
+            React__default["default"].createElement(StyledWrapper$1, null,
+                React__default["default"].createElement(ConnectWalletButton, __assign({ style: buttonStyle }, rest))));
 };
 var templateObject_1$1;
 
 var ConnectWallet = function (_a) {
     var onClickButton = _a.onClickButton, onCloseModal = _a.onCloseModal, onConnect = _a.onConnect, onError = _a.onError, _b = _a.mainButtonStyle, mainButtonStyle = _b === void 0 ? {} : _b, _c = _a.modalStyle, modalStyle = _c === void 0 ? {} : _c, _d = _a.modalHeaderStyle, modalHeaderStyle = _d === void 0 ? {} : _d, _e = _a.disconnectButtonStyle, disconnectButtonStyle = _e === void 0 ? {} : _e, _f = _a.fontFamily, fontFamily = _f === void 0 ? "" : _f, _g = _a.isInverted, isInverted = _g === void 0 ? false : _g;
     var _h = React.useState(false), isModalOpen = _h[0], setIsModalOpen = _h[1];
+    var _j = useConnectWallet(), wallet = _j.wallet, disconnect = _j.disconnect;
     var handleButtonClick = function (event) {
         if (onClickButton) {
             onClickButton(event);
         }
         else {
-            setIsModalOpen(true);
+            if (!!wallet) {
+                disconnect();
+            }
+            else {
+                setIsModalOpen(true);
+            }
         }
     };
     var handleCloseModal = function (event) {

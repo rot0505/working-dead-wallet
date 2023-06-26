@@ -66,6 +66,7 @@ const getSupportedWallets = (): ReadonlyArray<WalletInfo> => {
           ...wallet,
           ...window.cardano[wallet.id],
           isInstalled: true,
+          name: wallet.name
         });
       } else {
         uninstalledWallets.push({

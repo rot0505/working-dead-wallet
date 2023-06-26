@@ -5,6 +5,13 @@ export enum SupportedWallet {
   nami = "nami"
 }
 
+export const SupportedWalletName = {
+  metamask: "Metamask",
+  eternl: "Eternl",
+  flint: "Flint",
+  nami: "Nami"
+}
+
 export enum SupportedChain {
   ethereum = "ethereum",
   cardano = "cardano"

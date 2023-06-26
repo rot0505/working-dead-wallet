@@ -11,7 +11,7 @@ const StyledWrapper = styled.div`
   top: 42px;
   right: 70px;
   z-index: 9999;
-`
+`;
 
 const WalletButton: FunctionComponent<WalletButtonProps> = ({
   style,
@@ -23,13 +23,16 @@ const WalletButton: FunctionComponent<WalletButtonProps> = ({
     ...style,
   };
 
-  return <StyledWrapper>
-    {!!wallet ?
-      <DisconnectWalletButton style={buttonStyle} {...rest} />
-      :
-      <ConnectWalletButton style={buttonStyle} {...rest} />
+  return <>
+    {
+      !!wallet ?
+        <DisconnectWalletButton style={buttonStyle} {...rest} />
+        :
+        <StyledWrapper>
+          <ConnectWalletButton style={buttonStyle} {...rest} />
+        </StyledWrapper>
     }
-  </StyledWrapper>
+  </>
 };
 
 export default WalletButton;

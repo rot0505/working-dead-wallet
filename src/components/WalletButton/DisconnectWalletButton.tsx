@@ -13,8 +13,8 @@ const DisconnectWalletButton: FunctionComponent<DisconnectWalletButtonProps> = (
   if (!wallet) return null;
 
   return (
-    <Button style={style} iconLeft={wallet.icon} onClick={onClick} isSmallIcon>
-      Connected
+    <Button style={style} iconLeft={wallet.name} onClick={onClick} isSmallIcon>
+      Disconnect
     </Button>
   );
 };

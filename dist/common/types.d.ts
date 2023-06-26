@@ -4,6 +4,12 @@ export declare enum SupportedWallet {
     flint = "flint",
     nami = "nami"
 }
+export declare const SupportedWalletName: {
+    metamask: string;
+    eternl: string;
+    flint: string;
+    nami: string;
+};
 export declare enum SupportedChain {
     ethereum = "ethereum",
     cardano = "cardano"

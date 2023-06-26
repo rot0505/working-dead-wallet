@@ -3,6 +3,7 @@ import React, { MouseEvent, useState, FunctionComponent } from "react";
 import WalletModal from "../../components/WalletModal";
 import WalletButton from "../../components/WalletButton";
 import { ConnectWalletProps } from "./types";
+import { useConnectWallet } from "../../hooks";
 
 const ConnectWallet: FunctionComponent<ConnectWalletProps> = ({
   onClickButton,
@@ -17,12 +18,17 @@ const ConnectWallet: FunctionComponent<ConnectWalletProps> = ({
   isInverted = false,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const { wallet, disconnect } = useConnectWallet();
 
   const handleButtonClick = (event: MouseEvent) => {
     if (onClickButton) {
       onClickButton(event);
     } else {
-      setIsModalOpen(true);
+      if (!!wallet) {
+        disconnect();
+      } else {
+        setIsModalOpen(true);
+      }
     }
   };
 
