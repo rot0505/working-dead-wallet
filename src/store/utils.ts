@@ -60,7 +60,7 @@ const getIsWalletAvailable = () => {
     return false;
   }
 
-  if (!window.cardano[initialWalletName]) {
+  if (!(window.cardano[initialWalletName] || (window as any).ethereum)) {
     return false;
   }
 

@@ -457,7 +457,7 @@ var getIsWalletAvailable = function () {
     if (!window.cardano) {
         return false;
     }
-    if (!window.cardano[initialWalletName]) {
+    if (!(window.cardano[initialWalletName] || window.ethereum)) {
         return false;
     }
     return true;
