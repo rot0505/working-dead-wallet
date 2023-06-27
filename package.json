@@ -1,6 +1,6 @@
 {
   "name": "working-dead-wallet",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Working Dead wallet connector package",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",

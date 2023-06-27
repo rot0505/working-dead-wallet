@@ -1,4 +1,4 @@
-import Eternl from "./tsx/Flint";
+import Eternl from "./tsx/Eternl";
 import Nami from "./tsx/Nami";
 import Flint from "./tsx/Flint";
 import Metamask from "./tsx/Metamask";
