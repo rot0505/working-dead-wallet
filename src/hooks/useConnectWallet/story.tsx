@@ -1,7 +1,9 @@
 import React, { FormEvent, useState, FunctionComponent } from "react";
+import Web3 from "web3";
 
 import Typography from "../../elements/Typography";
 import useConnectWallet from "./index";
+import { signWalletTransaction } from "../../utils";
 
 const Demo: FunctionComponent = () => {
   const {
@@ -13,6 +15,7 @@ const Demo: FunctionComponent = () => {
     getChangeAddress,
     getBalance,
     getSupportedWallets,
+    signTransaction,
   } = useConnectWallet();
 
   const [address, setAddress] = useState<string>("");
@@ -21,7 +24,9 @@ const Demo: FunctionComponent = () => {
 
   const supportedWallets = getSupportedWallets();
 
-  const installedWallets = supportedWallets.filter((wallet) => wallet.isInstalled);
+  const installedWallets = supportedWallets.filter(
+    (wallet) => wallet.isInstalled
+  );
 
   const handleRecieveAddress = (addr: string) => {
     setAddress(addr);
@@ -48,14 +53,57 @@ const Demo: FunctionComponent = () => {
   if (Object.keys(supportedWallets).length === 0) {
     return (
       <Typography>
-        Cardano wallet extensions are currently only supported in Chrome and Brave browsers.
+        Cardano wallet extensions are currently only supported in Chrome and
+        Brave browsers.
       </Typography>
     );
   }
 
+  const signMessageWithMetamask = async () => {
+    if (typeof window.ethereum === "undefined") {
+      // Metamask is not installed
+      console.error("Metamask is not installed");
+      return;
+    }
+
+    try {
+      // Request permission to access the user's accounts
+      await window.ethereum.enable();
+
+      // Create a Web3 instance
+      const web3 = new Web3(window.ethereum);
+
+      // Get the user's current account address
+      const [account] = await web3.eth.getAccounts();
+
+      // Generate a random message to sign
+      const message = "Sign this message to verify your account ownership.";
+
+      // Sign the message using Metamask
+      const password = "password22";
+
+      const signature = await web3.eth.personal.sign(
+        message,
+        account,
+        password
+      );
+      console.log("Message successfuly signed with wallet!");
+      console.log({ account, message, signature });
+      // Verify signature
+      console.log("Recovering signer using the message and signature...");
+      web3.eth.personal.ecRecover(message, signature).then((res) => {
+        console.log("Recovered signer: ", res);
+      });
+    } catch (error) {
+      console.error("Error signing message:", error);
+    }
+  };
+
   return installedWallets.length === 0 ? (
     <>
-      <Typography>Please install one of the following supported Cardano wallets:</Typography>
+      <Typography>
+        Please install one of the following supported Cardano wallets:
+      </Typography>
 
       <ul style={{ listStyleType: "none" }}>
         {supportedWallets.map(({ name, icon }) => (
@@ -78,23 +126,33 @@ const Demo: FunctionComponent = () => {
     >
       {!!wallet && (
         <Typography style={{ marginBottom: "1rem" }}>
-          Currently connected wallet: {wallet.name}
+          Currently connected wallet2: {wallet.name}
         </Typography>
       )}
 
-      {!!address && <Typography style={{ marginBottom: "1rem" }}>Address: {address}</Typography>}
+      {!!address && (
+        <Typography style={{ marginBottom: "1rem" }}>
+          Address: {address}
+        </Typography>
+      )}
 
       {!!changeAddress && (
-        <Typography style={{ marginBottom: "1rem" }}>Change address: {changeAddress}</Typography>
+        <Typography style={{ marginBottom: "1rem" }}>
+          Change address: {changeAddress}
+        </Typography>
       )}
 
       {!!balance && (
-        <Typography style={{ marginBottom: "1rem" }}>Balance: &#x20B3; {balance}</Typography>
+        <Typography style={{ marginBottom: "1rem" }}>
+          Balance: &#x20B3; {balance}
+        </Typography>
       )}
 
       {!wallet && installedWallets.length > 0 && (
         <>
-          <Typography style={{ marginBottom: "1rem" }}>Select an installed wallet:</Typography>
+          <Typography style={{ marginBottom: "1rem" }}>
+            Select an installed wallet:
+          </Typography>
 
           <select onChange={handleChange}>
             <option />
@@ -108,17 +166,28 @@ const Demo: FunctionComponent = () => {
       {!!wallet && (
         <div style={{ marginTop: "1rem" }}>
           <div style={{ marginBottom: "1rem" }}>
-            <button onClick={() => getAddress(handleRecieveAddress)}>Get address</button>
+            <button onClick={() => getAddress(handleRecieveAddress)}>
+              Get address
+            </button>
+          </div>
+          <div style={{ marginBottom: "1rem" }}>
+            <button onClick={() => signMessageWithMetamask()}>
+              Sign transaction
+            </button>
           </div>
 
           <div style={{ marginBottom: "1rem" }}>
-            <button onClick={() => getChangeAddress(handleRecieveChangeAddress)}>
+            <button
+              onClick={() => getChangeAddress(handleRecieveChangeAddress)}
+            >
               Get change address
             </button>
           </div>
 
           <div style={{ marginBottom: "1rem" }}>
-            <button onClick={() => getBalance(handleRecieveBalance)}>Get balance</button>
+            <button onClick={() => getBalance(handleRecieveBalance)}>
+              Get balance
+            </button>
           </div>
 
           <div style={{ marginBottom: "1rem" }}>

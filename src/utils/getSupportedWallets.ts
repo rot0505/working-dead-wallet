@@ -12,6 +12,14 @@ const supportedWallets: ReadonlyArray<WalletInfo> = [
     chain: SupportedChain.ethereum
   },
   {
+    id: SupportedWallet.coinbase,
+    name: "Coinbase",
+    icon: "Coinbase",
+    extensionUrl: "https://chrome.google.com/webstore/detail/coinbase-wallet-extension/hnfanknocfeofbddgcijnmhnfnkdnaad",
+    websiteUrl: "https://www.coinbase.com/wallet/",
+    chain: SupportedChain.ethereum
+  },
+  {
     id: SupportedWallet.nami,
     name: "Nami",
     icon: "Nami",
@@ -40,7 +48,8 @@ const supportedWallets: ReadonlyArray<WalletInfo> = [
 ];
 
 const getSupportedWallets = (): ReadonlyArray<WalletInfo> => {
-  if (!["Chrome", "Brave"].includes(browserName)) {
+  console.log('browserName', browserName)
+  if (!["Chrome", "Brave", "Edge"].includes(browserName)) {
     return [];
   }
 
@@ -48,8 +57,21 @@ const getSupportedWallets = (): ReadonlyArray<WalletInfo> => {
   const uninstalledWallets: Array<WalletInfo> = [];
 
   supportedWallets.forEach((wallet) => {
-    if (wallet.chain === SupportedChain.ethereum) {
-      if ((window as any).ethereum) {
+
+    if (wallet.chain === SupportedChain.ethereum && wallet.id === SupportedWallet.metamask) {
+      if ((window as any).ethereum?.isMetaMask) {
+        installedWallets.push({
+          ...wallet,
+          isInstalled: true
+        })
+      } else {
+        uninstalledWallets.push({
+          ...wallet,
+          isInstalled: false
+        })
+      }
+    } else if (wallet.chain === SupportedChain.ethereum && wallet.id === SupportedWallet.coinbase) {
+      if ((window as any).coinbaseWalletExtension?.isCoinbaseWallet) {
         installedWallets.push({
           ...wallet,
           isInstalled: true

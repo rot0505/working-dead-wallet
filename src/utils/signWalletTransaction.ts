@@ -2,7 +2,10 @@ import { encode, decode } from "cbor-web";
 
 import { EnabledWallet } from "../common";
 
-const signWalletTransaction = async (wallet: EnabledWallet | null, tx: string): Promise<string> => {
+const signWalletTransaction = async (
+  wallet: EnabledWallet | null,
+  tx: string
+): Promise<string> => {
   if (!wallet) {
     throw new Error("No wallet selected");
   }

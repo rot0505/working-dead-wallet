@@ -1,5 +1,6 @@
 export enum SupportedWallet {
   metamask = "metamask",
+  coinbase = "coinbase",
   eternl = "eternl",
   flint = "flint",
   nami = "nami"
@@ -7,6 +8,7 @@ export enum SupportedWallet {
 
 export const SupportedWalletName = {
   metamask: "Metamask",
+  coinbasse: "Coinbase",
   eternl: "Eternl",
   flint: "Flint",
   nami: "Nami"

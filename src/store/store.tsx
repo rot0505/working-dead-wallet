@@ -6,7 +6,9 @@ export const initialState: State = {
   isLoading: false,
   error: null,
   enabledWallet: null,
-  isConnected: typeof localStorage !== 'undefined' && !!localStorage?.getItem(storageKey),
+  isConnected:
+    typeof localStorage !== "undefined" && !!localStorage?.getItem(storageKey),
+  address: null,
 };
 
 const store = makeObservable(initialState);

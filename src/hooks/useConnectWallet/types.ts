@@ -7,9 +7,12 @@ export interface UseConnectWalletResult {
   readonly wallet: EnabledWallet | null;
   readonly connect: (walletName: string) => void;
   readonly disconnect: () => void;
-  readonly getAddress: (callback: (address: string) => void) => void;
+  readonly getAddress: () => Promise<string | undefined>;
   readonly getChangeAddress: (callback: (address: string) => void) => void;
   readonly getBalance: (callback: (balance: number) => void) => void;
   readonly getSupportedWallets: () => ReadonlyArray<WalletInfo>;
-  readonly signTransaction: (tx: string, callback: (signedTx: string) => void) => void;
+  readonly signTransaction: (
+    tx: string,
+    callback: (signedTx: string) => void
+  ) => void;
 }

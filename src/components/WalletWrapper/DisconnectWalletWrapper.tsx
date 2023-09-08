@@ -8,8 +8,8 @@ import { WalletWrapperProps } from "./types";
 const StyledWalletDiv = styled.div`
   display: flex;
   align-items: center;
-  color: #E7E7E8;
-  font-family: 'Lexend', sans-serif;
+  color: #e7e7e8;
+  font-family: "Lexend", sans-serif;
   font-weight: 400;
   font-size: 16px;
   line-height: 130%;

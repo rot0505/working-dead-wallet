@@ -1,6 +1,6 @@
 {
-  "name": "working-dead-wallet",
-  "version": "0.3.3",
+  "name": "wallet-connector",
+  "version": "0.1.1",
   "description": "Working Dead wallet connector package",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
@@ -8,7 +8,7 @@
   "files": [
     "dist"
   ],
-  "repository": "https://github.com/rot0505/working-dead-wallet.git",
+  "repository": "https://github.com/The-Working-Dead/wallet-connector.git",
   "license": "MIT",
   "scripts": {
     "build": "rm -rf ./dist && rollup -c && tsc -d --emitDeclarationOnly --declarationDir dist",

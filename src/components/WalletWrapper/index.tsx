@@ -36,13 +36,19 @@ const WalletWrapper: FunctionComponent<WalletWrapperProps> = ({
     }
   }, [error]);
 
-  return <StyledWrapper>
-    {wallet ? (
-      <DisconnectWalletWrapper style={modalStyle}  {...rest} />
-    ) : (
-      <ConnectWalletWrapper style={modalStyle} activeWalletBgColor={activeWalletBgColor} {...rest} />
-    )}
-  </StyledWrapper>
+  return (
+    <StyledWrapper>
+      {wallet ? (
+        <DisconnectWalletWrapper style={modalStyle} {...rest} />
+      ) : (
+        <ConnectWalletWrapper
+          style={modalStyle}
+          activeWalletBgColor={activeWalletBgColor}
+          {...rest}
+        />
+      )}
+    </StyledWrapper>
+  );
 };
 
 export default WalletWrapper;

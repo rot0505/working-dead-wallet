@@ -28,33 +28,31 @@ const useConnectWallet = (): UseConnectWalletResult => {
     });
   }, [state]);
 
-  const getAddress = useCallback(
-    async (callback: (address: string) => void) => {
-      try {
-        setState({
-          ...state,
-          error: null,
-          isLoading: true,
-        });
+  async function getAddress() {
+    try {
+      setState({
+        ...state,
+        error: null,
+        isLoading: true,
+      });
 
-        const address = await getWalletAddress(state.enabledWallet);
-        callback(address);
-      } catch (err) {
-        if (err instanceof Error) {
-          setState({
-            ...state,
-            error: err.message,
-          });
-        }
-      } finally {
+      const address = await getWalletAddress(state.enabledWallet);
+
+      return address;
+    } catch (err) {
+      if (err instanceof Error) {
         setState({
           ...state,
-          isLoading: false,
+          error: err.message,
         });
       }
-    },
-    [state],
-  );
+    } finally {
+      setState({
+        ...state,
+        isLoading: false,
+      });
+    }
+  }
 
   const getChangeAddress = useCallback(
     async (callback: (address: string) => void) => {
@@ -81,7 +79,7 @@ const useConnectWallet = (): UseConnectWalletResult => {
         });
       }
     },
-    [state],
+    [state]
   );
 
   const getBalance = useCallback(
@@ -108,7 +106,7 @@ const useConnectWallet = (): UseConnectWalletResult => {
         });
       }
     },
-    [state],
+    [state]
   );
 
   const signTransaction = useCallback(
@@ -136,7 +134,7 @@ const useConnectWallet = (): UseConnectWalletResult => {
         });
       }
     },
-    [state],
+    [state]
   );
 
   const selectWallet = useCallback(
@@ -155,7 +153,10 @@ const useConnectWallet = (): UseConnectWalletResult => {
       } catch (err) {
         disconnect();
 
-        if (err instanceof Error && err.message !== APIErrorMessage.manualDisconnect) {
+        if (
+          err instanceof Error &&
+          err.message !== APIErrorMessage.manualDisconnect
+        ) {
           setState({
             ...state,
             error: err.message,
@@ -163,7 +164,7 @@ const useConnectWallet = (): UseConnectWalletResult => {
         }
       }
     },
-    [state],
+    [state]
   );
 
   const getEnabledWallet = useCallback(async () => {
@@ -173,7 +174,11 @@ const useConnectWallet = (): UseConnectWalletResult => {
       const isWalletConnected = await checkForInjectedWallet();
 
       if (!isWalletConnected) {
-        setState({ ...state, isConnected: false, error: "Unable to find connected wallet." });
+        setState({
+          ...state,
+          isConnected: false,
+          error: "Unable to find connected wallet.",
+        });
         return;
       }
 

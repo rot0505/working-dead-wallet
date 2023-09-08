@@ -14,7 +14,7 @@ export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
 const StyledButton = styled.button<ButtonProps>`
   display: flex;
   align-items: center;
-  background-color: #E7E7E8;
+  background-color: #e7e7e8;
   border-width: 0;
   border-radius: 8px;
   cursor: pointer;
@@ -24,12 +24,11 @@ const StyledButton = styled.button<ButtonProps>`
   font-size: 14px;
   line-height: 20px;
   box-sizing: border-box;
-  color: #0C0E14;
-  font-family: 'Inter', sans-serif;
+  color: #0c0e14;
+  font-family: "Inter", sans-serif;
 
   &:hover {
-    background-color: ${(props) =>
-    props.isInverted ? "#111" : "#FFF"};
+    background-color: ${(props) => (props.isInverted ? "#111" : "#FFF")};
   }
 `;
 const Button: FunctionComponent<ButtonProps> = ({
@@ -50,24 +49,26 @@ const Button: FunctionComponent<ButtonProps> = ({
       }}
       {...rest}
     >
-      {!!iconLeft &&
-        (isSmallIcon ? <Icon width={20} height={20} /> : <Icon />)
-      }
+      {!!iconLeft && (isSmallIcon ? <Icon width={20} height={20} /> : <Icon />)}
 
       {children}
 
       {!!iconRight && (
         <img
           src={`${iconRight}`}
-          style={isSmallIcon ? {
-            marginRight: "12px",
-            width: 20,
-            height: 20,
-          } : {
-            marginRight: "12px",
-            width: 32,
-            height: 32,
-          }}
+          style={
+            isSmallIcon
+              ? {
+                marginRight: "12px",
+                width: 20,
+                height: 20,
+              }
+              : {
+                marginRight: "12px",
+                width: 32,
+                height: 32,
+              }
+          }
         />
       )}
     </StyledButton>

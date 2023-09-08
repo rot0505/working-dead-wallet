@@ -17,12 +17,12 @@ const enableWallet = async (name?: string): Promise<EnabledWallet> => {
 
   let enabledWallet;
 
-  if (walletName === SupportedWallet.metamask) {
+  if (walletName === SupportedWallet.metamask || walletName === SupportedWallet.coinbase) {
     const ethereum = (window as any).ethereum;
     try {
       await ethereum.request({ method: "eth_requestAccounts" })
       enabledWallet = {
-        name: "Metamask",
+        name: walletName === SupportedWallet.metamask ? "Metamask" : "Coinbase",
         isEVM: true,
       }
     } catch (e) {

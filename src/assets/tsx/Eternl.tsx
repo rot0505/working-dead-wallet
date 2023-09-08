@@ -8,7 +8,7 @@ const Flint: FunctionComponent<SVGProps> = ({
 }) => {
   return (
     <svg viewBox="0 0 24 24" width={width} height={height} fill={fill} xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
-      <g clip-path="url(#clip0_6298_1430)">
+      <g clipPath="url(#clip0_6298_1430)">
         <path d="M22.909 1.09082H1.09082V22.909H22.909V1.09082Z" fill="url(#pattern0)" />
       </g>
       <defs>
